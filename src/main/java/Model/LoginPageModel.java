@@ -21,9 +21,14 @@ public class LoginPageModel {
     private WebElement loginButton;
     @FindBy(className = "aui-page-header-main")
     private WebElement title;
+    @FindBy(xpath = "//*[@id=\"login-form\"]/div[1]/div[1]/p")
+    private WebElement invalidLoginMsg;
 
     public String getTitle(){
         return title.getText();
+    }
+    public String getErrorMsg(){
+        return invalidLoginMsg.getText();
     }
 
     public void setUsername(String username){

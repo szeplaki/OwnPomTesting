@@ -36,4 +36,15 @@ public class LoginTest {
 
         Assertions.assertTrue(profilePageModel.getFullName().contains(FileReader.getValueByKey("jira.displayname")));
     }
+
+    @Test
+    public void loginWithInvalidUserName(){
+        LoginPageModel loginPageModel = new LoginPageModel(webDriver);
+
+        Assertions.assertTrue(loginPageModel.getTitle().contains("Welcome to Jira Auto"));
+
+        loginPageModel.login("whatever", FileReader.getValueByKey("jira.password"));
+
+        Assertions.assertTrue(loginPageModel.getErrorMsg().contains("Sorry, your username and password are incorrect - please try again."));
+    }
 }
