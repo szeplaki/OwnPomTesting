@@ -9,8 +9,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class LoginTest {
     static WebDriver webDriver;
+
     @BeforeAll
-    public static void setProperty(){
+    public static void setProperty() {
         System.setProperty("webdriver.chrome.driver", FileReader.getValueByKey("driver.location"));
     }
 
@@ -22,10 +23,12 @@ public class LoginTest {
     }
 
     @AfterEach
-    public void closeTab(){ webDriver.close(); }
+    public void closeTab() {
+        webDriver.close();
+    }
 
     @Test
-    public void successfulLogin(){
+    public void successfulLogin() {
         LoginPageModel loginPageModel = new LoginPageModel(webDriver);
         ProfilePageModel profilePageModel = new ProfilePageModel(webDriver);
 
@@ -39,7 +42,7 @@ public class LoginTest {
     }
 
     @Test
-    public void loginWithInvalidUserName(){
+    public void loginWithInvalidUserName() {
         LoginPageModel loginPageModel = new LoginPageModel(webDriver);
 
         Assertions.assertTrue(loginPageModel.getTitle().contains("Welcome to Jira Auto"));
@@ -47,5 +50,18 @@ public class LoginTest {
         loginPageModel.login("whatever", FileReader.getValueByKey("jira.password"));
 
         Assertions.assertTrue(loginPageModel.getErrorMsg().contains("Sorry, your username and password are incorrect - please try again."));
+    }
+
+    @Test
+    public void loginWithInvalidPassword() {
+        LoginPageModel loginPageModel = new LoginPageModel(webDriver);
+
+        Assertions.assertTrue(loginPageModel.getTitle().contains("Welcome to Jira Auto"));
+
+        loginPageModel.login(FileReader.getValueByKey("jira.username"), "whatever");
+
+        Assertions.assertTrue(loginPageModel.getErrorMsg().contains("Sorry, your username and password are incorrect - please try again."));
+
+        loginPageModel.login(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
     }
 }
