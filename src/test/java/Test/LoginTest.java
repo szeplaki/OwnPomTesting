@@ -3,10 +3,7 @@ package Test;
 import Model.LoginPageModel;
 import Model.ProfilePageModel;
 import org.example.FileReader;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -15,9 +12,13 @@ public class LoginTest {
     @BeforeAll
     public static void setProperty(){
         System.setProperty("webdriver.chrome.driver", FileReader.getValueByKey("driver.location"));
+    }
 
+    @BeforeEach
+    public void openTab() {
         webDriver = new ChromeDriver();
         webDriver.get("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
+        webDriver.manage().window().maximize();
     }
 
     @AfterEach
