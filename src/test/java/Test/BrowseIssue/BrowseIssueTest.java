@@ -4,6 +4,8 @@ import Model.BrowseIssue.BrowseIssueModel;
 import org.example.FileReader;
 import org.example.WebDriverService;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class BrowseIssueTest {
     BrowseIssueModel browseIssueModel;
@@ -39,5 +41,12 @@ public class BrowseIssueTest {
         browseIssueModel.getSearchField().sendKeys("Jira Test Project");
         browseIssueModel.getSearchButton().click();
         Assertions.assertTrue(browseIssueModel.waitUntilKeyIsVisible(expectedKey));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"MTP-99999999999"})
+    public void browseNonExistingIssue(String projectType) {
+        browseIssueModel.goToUrlAndMaximizeWindow(String.format("https://jira-auto.codecool.metastage.net/browse/%s", projectType));
+        Assertions.assertEquals("You can't view this issue", browseIssueModel.getErrorMessage());
     }
 }

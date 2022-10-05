@@ -25,6 +25,8 @@ public class BrowseIssueModel extends LoginPageModel {
     private WebElement searchButton;
     @FindBy(xpath = "//*[@id='key-val']")
     private WebElement issueNumber;
+    @FindBy(xpath = "//*[@id=\"issue-content\"]/div/div/h1")
+    private WebElement errorMessage;
 
 
     public String getIssueId() {
@@ -37,6 +39,10 @@ public class BrowseIssueModel extends LoginPageModel {
 
     public WebElement getSearchButton() {
         return searchButton;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage.getText();
     }
 
     public WebElement getIssueNumber() {
