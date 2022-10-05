@@ -1,7 +1,6 @@
 package Test.BrowseProject;
 
 import Model.BrowseProject.BrowseProjectModel;
-import Model.Login.LoginPageModel;
 import org.example.FileReader;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class BrowseProjectTest {
     static WebDriver webDriver;
+    BrowseProjectModel browseProjectModel;
 
     @BeforeAll
     public static void setProperty() {
@@ -25,6 +25,8 @@ public class BrowseProjectTest {
         webDriver = new ChromeDriver();
         webDriver.get("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
         webDriver.manage().window().maximize();
+        browseProjectModel = new BrowseProjectModel(webDriver);
+        browseProjectModel.doLogin();
     }
 
     @AfterEach
@@ -35,22 +37,14 @@ public class BrowseProjectTest {
     @ParameterizedTest
     @ValueSource(strings = {"MTP", "JETI", "TOUCAN", "COALA"})
     public void browseProject(String projectType) {
-        LoginPageModel loginPageModel = new LoginPageModel(webDriver);
-        loginPageModel.login(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
         webDriver.get(String.format("https://jira-auto.codecool.metastage.net/projects/%s/summary", projectType));
-        BrowseProjectModel browseProjectModel = new BrowseProjectModel(webDriver);
-
         Assertions.assertTrue(browseProjectModel.getProjectKey().contains(projectType));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"DUMMYDATA"})
     public void browseNonExistingProject(String projectType) {
-        LoginPageModel loginPageModel = new LoginPageModel(webDriver);
-        loginPageModel.login(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
         webDriver.get(String.format("https://jira-auto.codecool.metastage.net/projects/%s/summary", projectType));
-        BrowseProjectModel browseProjectModel = new BrowseProjectModel(webDriver);
-
         Assertions.assertTrue(browseProjectModel.getErrorMessage().contains("You can't view this project"));
     }
 }

@@ -1,5 +1,6 @@
 package Model.Login;
 
+import org.example.FileReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,9 +25,11 @@ public class LoginPageModel {
     @FindBy(xpath = "//*[@id=\"login-form\"]/div[1]/div[1]/p")
     private WebElement invalidLoginMsg;
 
+
     public String getTitle(){
         return title.getText();
     }
+
     public String getErrorMsg(){
         return invalidLoginMsg.getText();
     }
@@ -47,5 +50,10 @@ public class LoginPageModel {
         setUsername(username);
         setPassword(password);
         clickOnLoginButton();
+    }
+
+    public void doLogin(){
+        webDriver.navigate().to("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FMyJiraHome.jspa");
+        login(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
     }
 }

@@ -24,6 +24,7 @@ public class DashPageModel {
     @FindBy(xpath = "//*[@id=\"usernameerror\"]/p")
     private WebElement errorMessage;
 
+
     public String getErrorMessage() {
         return errorMessage.getText();
     }
