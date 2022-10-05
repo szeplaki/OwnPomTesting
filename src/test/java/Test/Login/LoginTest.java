@@ -1,7 +1,7 @@
-package Test;
+package Test.Login;
 
-import Model.LoginPageModel;
-import Model.ProfilePageModel;
+import Model.Login.LoginPageModel;
+import Model.Login.ProfilePageModel;
 import org.example.FileReader;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;

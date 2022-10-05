@@ -1,7 +1,7 @@
-package Test;
+package Test.Login;
 
-import Model.DashPageModel;
-import Model.ProfilePageModel;
+import Model.Login.DashPageModel;
+import Model.Login.ProfilePageModel;
 import org.example.FileReader;
 import org.example.RandomHelper;
 import org.junit.jupiter.api.*;

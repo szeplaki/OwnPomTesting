@@ -1,13 +1,18 @@
-package Test;
+package Test.BrowseProject;
 
-import Model.LoginPageModel;
-import Model.LogoutPageModel;
+import Model.BrowseProject.BrowseProjectModel;
+import Model.Login.LoginPageModel;
 import org.example.FileReader;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class LogoutTest {
+public class BrowseProjectTest {
     static WebDriver webDriver;
 
     @BeforeAll
@@ -27,15 +32,14 @@ public class LogoutTest {
         webDriver.close();
     }
 
-    @Test
-    public void successfulLogout(){
+    @ParameterizedTest
+    @ValueSource(strings = {"MTP", "JETI", "TOUCAN", "COALA"})
+    public void browseProject(String projectType) {
         LoginPageModel loginPageModel = new LoginPageModel(webDriver);
-        LogoutPageModel logoutPageModel = new LogoutPageModel(webDriver);
-
         loginPageModel.login(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
+        webDriver.get(String.format("https://jira-auto.codecool.metastage.net/projects/%s/summary", projectType));
+        BrowseProjectModel browseProjectModel = new BrowseProjectModel(webDriver);
 
-        logoutPageModel.logout();
-        Assertions.assertTrue(logoutPageModel.getLogoutMsg().contains("You are now logged out. Any automatic login has also been stopped."));
+        Assertions.assertTrue(browseProjectModel.getProjectKey().contains(projectType));
     }
-
 }
