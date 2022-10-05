@@ -29,41 +29,36 @@ public class LoginTestDashPage {
 
     @Test
     public void successfulLoginOnDashPage() {
-
         Assertions.assertTrue(dashPageModel.getDashPageTitle().contains("System Dashboard"));
 
         dashPageModel.loginOnDashPage(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
-        //RandomHelper.Wait(webDriver);
 
+        dashPageModel.waitUntil("id", "header-details-user-fullname");
         dashPageModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/secure/ViewProfile.jspa");
-        //RandomHelper.Wait(webDriver);
 
+        dashPageModel.waitUntil("id", "up-user-title");
         Assertions.assertTrue(profilePageModel.getFullName().contains(FileReader.getValueByKey("jira.displayname")));
     }
 
     @Test
     public void loginWithInvalidUserName() {
-
         Assertions.assertTrue(dashPageModel.getDashPageTitle().contains("System Dashboard"));
 
         dashPageModel.loginOnDashPage("whatever", FileReader.getValueByKey("jira.password"));
-        //RandomHelper.Wait(webDriver);
 
+        dashPageModel.waitUntil("xpath", "//*[@id=\"usernameerror\"]/p");
         Assertions.assertTrue(dashPageModel.getErrorMessage().contains("Sorry, your username and password are incorrect - please try again."));
     }
 
     @Test
     public void loginWithInvalidPassword() {
-
         Assertions.assertTrue(dashPageModel.getDashPageTitle().contains("System Dashboard"));
 
         dashPageModel.loginOnDashPage(FileReader.getValueByKey("jira.username"), "whatever");
-        //RandomHelper.Wait(webDriver);
 
+        dashPageModel.waitUntil("xpath", "//*[@id=\"usernameerror\"]/p");
         Assertions.assertTrue(dashPageModel.getErrorMessage().contains("Sorry, your username and password are incorrect - please try again."));
 
         dashPageModel.loginOnDashPage(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
     }
-
-
 }

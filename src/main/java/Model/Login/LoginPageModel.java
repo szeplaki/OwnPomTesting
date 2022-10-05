@@ -2,17 +2,24 @@ package Model.Login;
 
 import org.example.FileReader;
 import org.example.WebDriverService;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class LoginPageModel {
     protected final WebDriver webDriver;
+    protected final WebDriverWait webDriverWait;
 
     public LoginPageModel() {
         this.webDriver = WebDriverService.getInstance().getWebDriver();
         PageFactory.initElements(webDriver, this);
+        this.webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(15));
     }
 
     @FindBy(id = "login-form-username")
@@ -61,5 +68,16 @@ public class LoginPageModel {
     public void goToUrlAndMaximizeWindow(String url) {
         webDriver.get(url);
         webDriver.manage().window().maximize();
+    }
+
+    public void waitUntil(String type, String id){
+        switch (type){
+            case "id":
+                webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+                break;
+            case "xpath":
+                webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(id)));
+                break;
+        }
     }
 }
