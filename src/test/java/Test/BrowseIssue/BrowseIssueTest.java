@@ -5,6 +5,7 @@ import org.example.FileReader;
 import org.example.WebDriverService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class BrowseIssueTest {
@@ -48,5 +49,12 @@ public class BrowseIssueTest {
     public void browseNonExistingIssue(String projectType) {
         browseIssueModel.goToUrlAndMaximizeWindow(String.format("https://jira-auto.codecool.metastage.net/browse/%s", projectType));
         Assertions.assertEquals("You can't view this issue", browseIssueModel.getErrorMessage());
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/issueIds.csv")
+    public void browseIssueWithSpecificId(String issueId) {
+        browseIssueModel.goToUrlAndMaximizeWindow(String.format("https://jira-auto.codecool.metastage.net/browse/%s", issueId));
+        Assertions.assertDoesNotThrow(() -> browseIssueModel.getIssueId());
     }
 }
