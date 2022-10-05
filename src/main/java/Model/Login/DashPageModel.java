@@ -1,15 +1,12 @@
 package Model.Login;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class DashPageModel {
-    private final WebDriver webDriver;
+public class DashPageModel extends LoginPageModel {
 
-    public DashPageModel(WebDriver webDriver) {
-        this.webDriver = webDriver;
+    public DashPageModel() {
         PageFactory.initElements(webDriver, this);
     }
 
@@ -29,23 +26,23 @@ public class DashPageModel {
         return errorMessage.getText();
     }
 
-    public String getDashPageTitle(){
+    public String getDashPageTitle() {
         return dashPageTitle.getText();
     }
 
-    private void setUsername(String username){
+    public void setUsername(String username) {
         this.usernameField.sendKeys(username);
     }
 
-    private void setPassword(String password) {
+    public void setPassword(String password) {
         this.passwordField.sendKeys(password);
     }
 
-    private void clickLoginButtonOnDash(){
+    private void clickLoginButtonOnDash() {
         loginButton.click();
     }
 
-    public void loginOnDashPage(String username, String password){
+    public void loginOnDashPage(String username, String password) {
         setUsername(username);
         setPassword(password);
         clickLoginButtonOnDash();

@@ -3,12 +3,12 @@ package Test.Login;
 import Model.Login.LoginPageModel;
 import Model.Login.ProfilePageModel;
 import org.example.FileReader;
+import org.example.WebDriverService;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 public class LoginTest {
-    static WebDriver webDriver;
+    LoginPageModel loginPageModel;
+    ProfilePageModel profilePageModel;
 
     @BeforeAll
     public static void setProperty() {
@@ -17,33 +17,31 @@ public class LoginTest {
 
     @BeforeEach
     public void openTab() {
-        webDriver = new ChromeDriver();
-        webDriver.get("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
-        webDriver.manage().window().maximize();
+        loginPageModel = new LoginPageModel();
+        loginPageModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
     }
 
     @AfterEach
     public void closeTab() {
-        webDriver.close();
+        WebDriverService.getInstance().quitWebDriver();
     }
 
     @Test
     public void successfulLogin() {
-        LoginPageModel loginPageModel = new LoginPageModel(webDriver);
-        ProfilePageModel profilePageModel = new ProfilePageModel(webDriver);
+
+        profilePageModel = new ProfilePageModel();
 
         Assertions.assertTrue(loginPageModel.getTitle().contains("Welcome to Jira Auto"));
 
         loginPageModel.login(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
 
-        webDriver.get("https://jira-auto.codecool.metastage.net/secure/ViewProfile.jspa");
+        loginPageModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/secure/ViewProfile.jspa");
 
         Assertions.assertTrue(profilePageModel.getFullName().contains(FileReader.getValueByKey("jira.displayname")));
     }
 
     @Test
     public void loginWithInvalidUserName() {
-        LoginPageModel loginPageModel = new LoginPageModel(webDriver);
 
         Assertions.assertTrue(loginPageModel.getTitle().contains("Welcome to Jira Auto"));
 
@@ -56,7 +54,6 @@ public class LoginTest {
 
     @Test
     public void loginWithInvalidPassword() {
-        LoginPageModel loginPageModel = new LoginPageModel(webDriver);
 
         Assertions.assertTrue(loginPageModel.getTitle().contains("Welcome to Jira Auto"));
 

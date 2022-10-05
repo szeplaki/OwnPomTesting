@@ -3,13 +3,12 @@ package Test.Login;
 import Model.Login.DashPageModel;
 import Model.Login.ProfilePageModel;
 import org.example.FileReader;
-import org.example.RandomHelper;
+import org.example.WebDriverService;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 public class LoginTestDashPage {
-    static WebDriver webDriver;
+    DashPageModel dashPageModel;
+    ProfilePageModel profilePageModel;
 
     @BeforeAll
     public static void setProperty() {
@@ -18,52 +17,48 @@ public class LoginTestDashPage {
 
     @BeforeEach
     public void openTab() {
-        webDriver = new ChromeDriver();
-        webDriver.get("https://jira-auto.codecool.metastage.net/secure/Dashboard.jspa");
-        webDriver.manage().window().maximize();
+        dashPageModel = new DashPageModel();
+        profilePageModel = new ProfilePageModel();
+        dashPageModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/secure/Dashboard.jspa");
     }
 
     @AfterEach
     public void closeTab() {
-        webDriver.close();
+        WebDriverService.getInstance().quitWebDriver();
     }
 
     @Test
-    public void successfulLoginOnDashPage(){
-        DashPageModel dashPageModel = new DashPageModel(webDriver);
-        ProfilePageModel profilePageModel = new ProfilePageModel(webDriver);
+    public void successfulLoginOnDashPage() {
 
         Assertions.assertTrue(dashPageModel.getDashPageTitle().contains("System Dashboard"));
 
-        dashPageModel.loginOnDashPage (FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
-        RandomHelper.Wait(webDriver);
+        dashPageModel.loginOnDashPage(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
+        //RandomHelper.Wait(webDriver);
 
-        webDriver.get("https://jira-auto.codecool.metastage.net/secure/ViewProfile.jspa");
-        RandomHelper.Wait(webDriver);
+        dashPageModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/secure/ViewProfile.jspa");
+        //RandomHelper.Wait(webDriver);
 
         Assertions.assertTrue(profilePageModel.getFullName().contains(FileReader.getValueByKey("jira.displayname")));
     }
 
     @Test
     public void loginWithInvalidUserName() {
-        DashPageModel dashPageModel = new DashPageModel(webDriver);
 
         Assertions.assertTrue(dashPageModel.getDashPageTitle().contains("System Dashboard"));
 
         dashPageModel.loginOnDashPage("whatever", FileReader.getValueByKey("jira.password"));
-        RandomHelper.Wait(webDriver);
+        //RandomHelper.Wait(webDriver);
 
         Assertions.assertTrue(dashPageModel.getErrorMessage().contains("Sorry, your username and password are incorrect - please try again."));
     }
 
     @Test
     public void loginWithInvalidPassword() {
-        DashPageModel dashPageModel = new DashPageModel(webDriver);
 
         Assertions.assertTrue(dashPageModel.getDashPageTitle().contains("System Dashboard"));
 
         dashPageModel.loginOnDashPage(FileReader.getValueByKey("jira.username"), "whatever");
-        RandomHelper.Wait(webDriver);
+        //RandomHelper.Wait(webDriver);
 
         Assertions.assertTrue(dashPageModel.getErrorMessage().contains("Sorry, your username and password are incorrect - please try again."));
 

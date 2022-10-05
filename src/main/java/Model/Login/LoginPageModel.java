@@ -1,16 +1,17 @@
 package Model.Login;
 
 import org.example.FileReader;
+import org.example.WebDriverService;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LoginPageModel {
-    private final WebDriver webDriver;
+    protected final WebDriver webDriver;
 
-    public LoginPageModel(WebDriver webDriver) {
-        this.webDriver = webDriver;
+    public LoginPageModel() {
+        this.webDriver = WebDriverService.getInstance().getWebDriver();
         PageFactory.initElements(webDriver, this);
     }
 
@@ -26,15 +27,15 @@ public class LoginPageModel {
     private WebElement invalidLoginMsg;
 
 
-    public String getTitle(){
+    public String getTitle() {
         return title.getText();
     }
 
-    public String getErrorMsg(){
+    public String getErrorMsg() {
         return invalidLoginMsg.getText();
     }
 
-    public void setUsername(String username){
+    public void setUsername(String username) {
         this.usernameField.sendKeys(username);
     }
 
@@ -42,18 +43,23 @@ public class LoginPageModel {
         this.passwordField.sendKeys(password);
     }
 
-    public void clickOnLoginButton(){
+    public void clickOnLoginButton() {
         loginButton.click();
     }
 
-    public void login(String username, String password){
+    public void login(String username, String password) {
         setUsername(username);
         setPassword(password);
         clickOnLoginButton();
     }
 
-    public void doLogin(){
+    public void doLogin() {
         webDriver.navigate().to("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FMyJiraHome.jspa");
         login(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
+    }
+
+    public void goToUrlAndMaximizeWindow(String url) {
+        webDriver.get(url);
+        webDriver.manage().window().maximize();
     }
 }

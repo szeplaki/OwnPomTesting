@@ -2,12 +2,10 @@ package Test.Logout;
 
 import Model.Logout.LogoutPageModel;
 import org.example.FileReader;
+import org.example.WebDriverService;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 public class LogoutTest {
-    static WebDriver webDriver;
     LogoutPageModel logoutPageModel;
 
     @BeforeAll
@@ -17,22 +15,19 @@ public class LogoutTest {
 
     @BeforeEach
     public void openTab() {
-        webDriver = new ChromeDriver();
-        webDriver.get("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
-        webDriver.manage().window().maximize();
-        logoutPageModel = new LogoutPageModel(webDriver);
+        logoutPageModel = new LogoutPageModel();
+        logoutPageModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
         logoutPageModel.doLogin();
     }
 
     @AfterEach
     public void closeTab() {
-        webDriver.close();
+        WebDriverService.getInstance().quitWebDriver();
     }
 
     @Test
-    public void successfulLogout(){
+    public void successfulLogout() {
         logoutPageModel.logout();
         Assertions.assertTrue(logoutPageModel.getLogoutMsg().contains("You are now logged out. Any automatic login has also been stopped."));
     }
-
 }

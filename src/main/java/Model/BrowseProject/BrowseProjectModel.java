@@ -1,15 +1,13 @@
 package Model.BrowseProject;
 
 import Model.Login.LoginPageModel;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class BrowseProjectModel extends LoginPageModel {
 
-    public BrowseProjectModel(WebDriver webDriver) {
-        super(webDriver);
+    public BrowseProjectModel() {
         PageFactory.initElements(webDriver, this);
     }
 
@@ -22,6 +20,7 @@ public class BrowseProjectModel extends LoginPageModel {
     public String getProjectKey() {
         return projectKey.getAttribute("href");
     }
+
     public String getErrorMessage() {
         return errorMessage.getText();
     }
