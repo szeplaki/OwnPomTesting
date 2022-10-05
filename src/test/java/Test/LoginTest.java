@@ -50,6 +50,8 @@ public class LoginTest {
         loginPageModel.login("whatever", FileReader.getValueByKey("jira.password"));
 
         Assertions.assertTrue(loginPageModel.getErrorMsg().contains("Sorry, your username and password are incorrect - please try again."));
+
+        loginPageModel.login(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
     }
 
     @Test
