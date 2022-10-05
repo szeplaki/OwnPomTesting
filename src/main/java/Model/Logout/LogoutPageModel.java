@@ -15,7 +15,7 @@ public class LogoutPageModel extends LoginPageModel {
     private WebElement profileIcon;
     @FindBy(id = "log_out")
     private WebElement logoutButton;
-    @FindBy(xpath = "//*[@id=\"main\"]/div/div/p[1]")
+    @FindBy(xpath = "//*[@id='main']//p[1]")
     private WebElement logoutMsg;
 
     public String getLogoutMsg() {

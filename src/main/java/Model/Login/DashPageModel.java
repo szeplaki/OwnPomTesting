@@ -16,9 +16,9 @@ public class DashPageModel extends LoginPageModel {
     private WebElement passwordField;
     @FindBy(id = "login")
     private WebElement loginButton;
-    @FindBy(xpath = "//*[@id=\"dashboard-content\"]/div[1]/div/div[1]")
+    @FindBy(xpath = "//*[@id='dashboard-content']//div[@class='aui-page-header-main']/h1")
     private WebElement dashPageTitle;
-    @FindBy(xpath = "//*[@id=\"usernameerror\"]/p")
+    @FindBy(xpath = "//*[@id='usernameerror']/p")
     private WebElement errorMessage;
 
 

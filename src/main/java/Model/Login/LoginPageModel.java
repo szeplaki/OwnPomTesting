@@ -30,7 +30,7 @@ public class LoginPageModel {
     private WebElement loginButton;
     @FindBy(className = "aui-page-header-main")
     private WebElement title;
-    @FindBy(xpath = "//*[@id=\"login-form\"]/div[1]/div[1]/p")
+    @FindBy(xpath = "//*[@id='login-form']//p")
     private WebElement invalidLoginMsg;
 
 

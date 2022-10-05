@@ -11,9 +11,9 @@ public class BrowseProjectModel extends LoginPageModel {
         PageFactory.initElements(webDriver, this);
     }
 
-    @FindBy(xpath = "//*[@id=\"sidebar\"]/div/div[1]/div/div/div[2]/h1/div/div/a")
+    @FindBy(xpath = "//*[@id='sidebar']//a")
     private WebElement projectKey;
-    @FindBy(xpath = "//*[@id=\"main\"]/h1")
+    @FindBy(xpath = "//*[@id='main']/h1")
     private WebElement errorMessage;
 
 
