@@ -20,10 +20,6 @@ public class EditIssueModel extends LoginPageModel {
     WebElement modalSummaryField;
     @FindBy(id = "edit-issue-submit")
     WebElement updateBtn;
-    @FindBy(id = "summary-val")
-    WebElement summaryTitle;
-    @FindBy(xpath = "//*[@id='aui-flag-container']/div/div/button")
-    WebElement closeModalBtn;
 
 
     public String getIssueID(){
@@ -38,10 +34,6 @@ public class EditIssueModel extends LoginPageModel {
         return editModalTitle.getText();
     }
 
-    public WebElement getEditBtn() {
-        return editBtn;
-    }
-
     public void setModalSummaryField(String strSummary){
         modalSummaryField.clear();
         modalSummaryField.sendKeys(strSummary);
@@ -49,13 +41,5 @@ public class EditIssueModel extends LoginPageModel {
 
     public void clickUpdateBtn(){
         updateBtn.click();
-    }
-
-    public String getSummaryTitle() {
-        return summaryTitle.getText();
-    }
-
-    public void clickModalBtn(){
-        closeModalBtn.click();
     }
 }
