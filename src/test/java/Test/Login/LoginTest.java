@@ -10,11 +10,6 @@ public class LoginTest {
     LoginPageModel loginPageModel;
     ProfilePageModel profilePageModel;
 
-    @BeforeAll
-    public static void setProperty() {
-        System.setProperty("webdriver.chrome.driver", FileReader.getValueByKey("driver.location"));
-    }
-
     @BeforeEach
     public void openTab() {
         loginPageModel = new LoginPageModel();

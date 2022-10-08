@@ -1,22 +1,15 @@
 package Test.BrowseProject;
 
 import Model.BrowseProject.BrowseProjectModel;
-import org.example.FileReader;
 import org.example.WebDriverService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class BrowseProjectTest {
     BrowseProjectModel browseProjectModel;
-
-    @BeforeAll
-    public static void setProperty() {
-        System.setProperty("webdriver.chrome.driver", FileReader.getValueByKey("driver.location"));
-    }
 
     @BeforeEach
     public void openTab() {

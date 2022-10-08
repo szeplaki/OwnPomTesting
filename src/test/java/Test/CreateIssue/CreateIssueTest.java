@@ -12,11 +12,6 @@ public class CreateIssueTest {
 
     CreateIssueModel createIssueModel;
 
-    @BeforeAll
-    public static void setProperty() {
-        System.setProperty("webdriver.chrome.driver", FileReader.getValueByKey("driver.location"));
-    }
-
     @BeforeEach
     public void openNewTab() {
         createIssueModel = new CreateIssueModel();

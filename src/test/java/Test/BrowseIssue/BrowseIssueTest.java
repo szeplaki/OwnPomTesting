@@ -1,20 +1,17 @@
 package Test.BrowseIssue;
 
 import Model.BrowseIssue.BrowseIssueModel;
-import org.example.FileReader;
 import org.example.WebDriverService;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class BrowseIssueTest {
     BrowseIssueModel browseIssueModel;
-
-    @BeforeAll
-    public static void setProperty() {
-        System.setProperty("webdriver.chrome.driver", FileReader.getValueByKey("driver.location"));
-    }
 
     @BeforeEach
     public void openNewTab() {

@@ -1,17 +1,14 @@
 package Test.Logout;
 
 import Model.Logout.LogoutPageModel;
-import org.example.FileReader;
 import org.example.WebDriverService;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class LogoutTest {
     LogoutPageModel logoutPageModel;
-
-    @BeforeAll
-    public static void setProperty() {
-        System.setProperty("webdriver.chrome.driver", FileReader.getValueByKey("driver.location"));
-    }
 
     @BeforeEach
     public void openTab() {

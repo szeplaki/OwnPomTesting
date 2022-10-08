@@ -10,11 +10,6 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 public class EditIssueTest {
     EditIssueModel editIssueModel;
 
-    @BeforeAll
-    public static void setProperty() {
-        System.setProperty("webdriver.chrome.driver", FileReader.getValueByKey("driver.location"));
-    }
-
     @BeforeEach
     public void openNewTab() {
         editIssueModel = new EditIssueModel();

@@ -10,11 +10,6 @@ public class LoginTestDashPage {
     DashPageModel dashPageModel;
     ProfilePageModel profilePageModel;
 
-    @BeforeAll
-    public static void setProperty() {
-        System.setProperty("webdriver.chrome.driver", FileReader.getValueByKey("driver.location"));
-    }
-
     @BeforeEach
     public void openTab() {
         dashPageModel = new DashPageModel();
