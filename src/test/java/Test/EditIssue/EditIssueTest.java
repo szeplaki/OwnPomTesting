@@ -13,7 +13,7 @@ public class EditIssueTest {
     @BeforeEach
     public void openNewTab() {
         editIssueModel = new EditIssueModel();
-        editIssueModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
+        editIssueModel.goToUrlAndMaximizeWindow("/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
         editIssueModel.doLogin();
     }
 
@@ -24,7 +24,7 @@ public class EditIssueTest {
 
     @Test
     public void editIssueSuccessfully() {
-        editIssueModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/browse/MTP-2245");
+        editIssueModel.goToUrlAndMaximizeWindow("/browse/MTP-2245");
         Assertions.assertTrue(editIssueModel.getIssueID().contains("MTP-2245"));
 
         editIssueModel.clickEditBtn();
@@ -44,7 +44,7 @@ public class EditIssueTest {
     @ParameterizedTest
     @CsvFileSource(resources = "/issueIds.csv")
     public void editIssueWithSpecificId(String issueId){
-        editIssueModel.goToUrlAndMaximizeWindow(String.format("https://jira-auto.codecool.metastage.net/browse/%s", issueId));
+        editIssueModel.goToUrlAndMaximizeWindow(String.format("/browse/%s", issueId));
         Assertions.assertDoesNotThrow(() -> editIssueModel.clickEditBtn());
     }
 }

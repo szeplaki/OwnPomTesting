@@ -15,7 +15,7 @@ public class CreateIssueTest {
     @BeforeEach
     public void openNewTab() {
         createIssueModel = new CreateIssueModel();
-        createIssueModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
+        createIssueModel.goToUrlAndMaximizeWindow("/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
         createIssueModel.doLogin();
     }
 

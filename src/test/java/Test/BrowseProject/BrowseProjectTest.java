@@ -14,7 +14,7 @@ public class BrowseProjectTest {
     @BeforeEach
     public void openTab() {
         browseProjectModel = new BrowseProjectModel();
-        browseProjectModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
+        browseProjectModel.goToUrlAndMaximizeWindow("/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
         browseProjectModel.doLogin();
     }
 
@@ -26,13 +26,13 @@ public class BrowseProjectTest {
     @ParameterizedTest
     @ValueSource(strings = {"MTP", "JETI", "TOUCAN", "COALA"})
     public void browseProject(String projectType) {
-        browseProjectModel.goToUrlAndMaximizeWindow(String.format("https://jira-auto.codecool.metastage.net/projects/%s/summary", projectType));
+        browseProjectModel.goToUrlAndMaximizeWindow(String.format("/projects/%s/summary", projectType));
         Assertions.assertTrue(browseProjectModel.getProjectKey().contains(projectType));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"DUMMYDATA"})
     public void browseNonExistingProject(String projectType) {
-        browseProjectModel.goToUrlAndMaximizeWindow(String.format("https://jira-auto.codecool.metastage.net/projects/%s/summary", projectType));
+        browseProjectModel.goToUrlAndMaximizeWindow(String.format("/projects/%s/summary", projectType));
     }
 }

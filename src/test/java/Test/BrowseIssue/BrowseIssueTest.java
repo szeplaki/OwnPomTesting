@@ -16,7 +16,7 @@ public class BrowseIssueTest {
     @BeforeEach
     public void openNewTab() {
         browseIssueModel = new BrowseIssueModel();
-        browseIssueModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
+        browseIssueModel.goToUrlAndMaximizeWindow("/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
         browseIssueModel.doLogin();
     }
 
@@ -27,14 +27,14 @@ public class BrowseIssueTest {
 
     @Test
     public void browseExistingIssue() {
-        browseIssueModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/browse/MTP-2253");
+        browseIssueModel.goToUrlAndMaximizeWindow("/browse/MTP-2253");
         Assertions.assertEquals("MTP-2253",browseIssueModel.getIssueId());
     }
 
     @Test
     public void checkPossibilityOfBrowsing(){
         String expectedKey = "MTP-2245";
-        browseIssueModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/issues/?jql=");
+        browseIssueModel.goToUrlAndMaximizeWindow("/issues/?jql=");
         browseIssueModel.getSearchField().click();
         browseIssueModel.getSearchField().sendKeys("Jira Test Project");
         browseIssueModel.getSearchButton().click();
@@ -44,14 +44,14 @@ public class BrowseIssueTest {
     @ParameterizedTest
     @ValueSource(strings = {"MTP-99999999999"})
     public void browseNonExistingIssue(String projectType) {
-        browseIssueModel.goToUrlAndMaximizeWindow(String.format("https://jira-auto.codecool.metastage.net/browse/%s", projectType));
+        browseIssueModel.goToUrlAndMaximizeWindow(String.format("/browse/%s", projectType));
         Assertions.assertEquals("You can't view this issue", browseIssueModel.getErrorMessage());
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/issueIds.csv")
     public void browseIssueWithSpecificId(String issueId) {
-        browseIssueModel.goToUrlAndMaximizeWindow(String.format("https://jira-auto.codecool.metastage.net/browse/%s", issueId));
+        browseIssueModel.goToUrlAndMaximizeWindow(String.format("/browse/%s", issueId));
         Assertions.assertDoesNotThrow(() -> browseIssueModel.getIssueId());
     }
 }

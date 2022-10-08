@@ -13,7 +13,7 @@ public class LogoutTest {
     @BeforeEach
     public void openTab() {
         logoutPageModel = new LogoutPageModel();
-        logoutPageModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
+        logoutPageModel.goToUrlAndMaximizeWindow("/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
         logoutPageModel.doLogin();
     }
 
