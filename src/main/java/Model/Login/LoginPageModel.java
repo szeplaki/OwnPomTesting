@@ -65,8 +65,8 @@ public class LoginPageModel {
         login(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
     }
 
-    public void goToUrlAndMaximizeWindow(String url) {
-        webDriver.get(url);
+    public void goToUrlAndMaximizeWindow(String urlEnding) {
+        webDriver.get(FileReader.getValueByKey("jira.baseurl") + urlEnding);
         webDriver.manage().window().maximize();
     }
 

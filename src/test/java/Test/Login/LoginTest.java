@@ -13,7 +13,7 @@ public class LoginTest {
     @BeforeEach
     public void openTab() {
         loginPageModel = new LoginPageModel();
-        loginPageModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
+        loginPageModel.goToUrlAndMaximizeWindow("/login.jsp?os_destination=%2Fsecure%2FTests.jspa#/design?projectId=10101");
     }
 
     @AfterEach
@@ -30,7 +30,7 @@ public class LoginTest {
 
         loginPageModel.login(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
 
-        loginPageModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/secure/ViewProfile.jspa");
+        loginPageModel.goToUrlAndMaximizeWindow("/secure/ViewProfile.jspa");
 
         Assertions.assertTrue(profilePageModel.getFullName().contains(FileReader.getValueByKey("jira.displayname")));
     }

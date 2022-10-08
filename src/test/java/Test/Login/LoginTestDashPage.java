@@ -14,7 +14,7 @@ public class LoginTestDashPage {
     public void openTab() {
         dashPageModel = new DashPageModel();
         profilePageModel = new ProfilePageModel();
-        dashPageModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/secure/Dashboard.jspa");
+        dashPageModel.goToUrlAndMaximizeWindow("/secure/Dashboard.jspa");
     }
 
     @AfterEach
@@ -29,7 +29,7 @@ public class LoginTestDashPage {
         dashPageModel.loginOnDashPage(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
 
         dashPageModel.waitUntil("id", "header-details-user-fullname");
-        dashPageModel.goToUrlAndMaximizeWindow("https://jira-auto.codecool.metastage.net/secure/ViewProfile.jspa");
+        dashPageModel.goToUrlAndMaximizeWindow("/secure/ViewProfile.jspa");
 
         dashPageModel.waitUntil("id", "up-user-title");
         Assertions.assertTrue(profilePageModel.getFullName().contains(FileReader.getValueByKey("jira.displayname")));
