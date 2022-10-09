@@ -79,4 +79,13 @@ public class CreateIssueTest {
         Assertions.assertTrue(actualProjectName.contains(expectedProjectKey));
         Assertions.assertEquals(expectedIssueType, actualIssueType);
     }
+
+    @Test
+    public void createIssueWithEmptySummary() {
+        createIssueModel.clickCreateButton();
+        createIssueModel.waitUntilElementIsVisible("id", "create-issue-submit");
+        createIssueModel.getSubmitButton().click();
+        createIssueModel.waitUntilElementIsVisible("xpath", "//*[@id='dialog-form']//div[text() = 'You must specify a summary of the issue.']");
+        Assertions.assertEquals("You must specify a summary of the issue.", createIssueModel.getErrorMessage());
+    }
 }

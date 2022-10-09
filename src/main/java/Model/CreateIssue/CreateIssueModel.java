@@ -46,6 +46,9 @@ public class CreateIssueModel extends LoginPageModel {
     private WebElement deleteButton;
     @FindBy(id = "delete-issue-submit")
     private WebElement submitDelete;
+    //@FindBy(xpath = "//*[@id='dialog-form']/div/div[2]/div[1]/div")
+    @FindBy(xpath = "//*[@id='dialog-form']//div[text() = 'You must specify a summary of the issue.']")
+    private WebElement errorMessage;
 
     public void clickCreateButton() {
         createButton.click();
@@ -158,5 +161,9 @@ public class CreateIssueModel extends LoginPageModel {
     }
     public void clearSummaryField() {
         getSummaryField().clear();
+    }
+
+    public String getErrorMessage() {
+        return errorMessage.getText();
     }
 }
