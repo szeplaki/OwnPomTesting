@@ -70,7 +70,7 @@ public class LoginPageModel {
         webDriver.manage().window().maximize();
     }
 
-    public void waitUntil(String type, String id){
+    public void waitUntilElementIsVisible(String type, String id){
         switch (type){
             case "id":
                 webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));

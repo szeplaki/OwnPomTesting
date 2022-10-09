@@ -1,7 +1,6 @@
 package Test.EditIssue;
 
 import Model.EditIssue.EditIssueModel;
-import org.example.FileReader;
 import org.example.WebDriverService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,14 +27,14 @@ public class EditIssueTest {
         Assertions.assertTrue(editIssueModel.getIssueID().contains("MTP-2245"));
 
         editIssueModel.clickEditBtn();
-        editIssueModel.waitUntil("xpath", "//*[@id='edit-issue-dialog']/header/h2");
+        editIssueModel.waitUntilElementIsVisible("xpath", "//*[@id='edit-issue-dialog']/header/h2");
         Assertions.assertTrue(editIssueModel.getEditModelTitle().contains("Edit Issue : MTP-2245"));
         editIssueModel.setModalSummaryField("Allopenissues");
         editIssueModel.clickUpdateBtn();
 
 
         editIssueModel.clickEditBtn();
-        editIssueModel.waitUntil("xpath", "//*[@id='edit-issue-dialog']/header/h2");
+        editIssueModel.waitUntilElementIsVisible("xpath", "//*[@id='edit-issue-dialog']/header/h2");
         Assertions.assertTrue(editIssueModel.getEditModelTitle().contains("Edit Issue : MTP-2245"));
         editIssueModel.setModalSummaryField("Jira Test Project");
         editIssueModel.clickUpdateBtn();

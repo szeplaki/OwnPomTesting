@@ -28,10 +28,10 @@ public class LoginTestDashPage {
 
         dashPageModel.loginOnDashPage(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));
 
-        dashPageModel.waitUntil("id", "header-details-user-fullname");
+        dashPageModel.waitUntilElementIsVisible("id", "header-details-user-fullname");
         dashPageModel.goToUrlAndMaximizeWindow("/secure/ViewProfile.jspa");
 
-        dashPageModel.waitUntil("id", "up-user-title");
+        dashPageModel.waitUntilElementIsVisible("id", "up-user-title");
         Assertions.assertTrue(profilePageModel.getFullName().contains(FileReader.getValueByKey("jira.displayname")));
     }
 
@@ -41,7 +41,7 @@ public class LoginTestDashPage {
 
         dashPageModel.loginOnDashPage("whatever", FileReader.getValueByKey("jira.password"));
 
-        dashPageModel.waitUntil("xpath", "//*[@id=\"usernameerror\"]/p");
+        dashPageModel.waitUntilElementIsVisible("xpath", "//*[@id='usernameerror']/p");
         Assertions.assertTrue(dashPageModel.getErrorMessage().contains("Sorry, your username and password are incorrect - please try again."));
     }
 
@@ -51,7 +51,7 @@ public class LoginTestDashPage {
 
         dashPageModel.loginOnDashPage(FileReader.getValueByKey("jira.username"), "whatever");
 
-        dashPageModel.waitUntil("xpath", "//*[@id=\"usernameerror\"]/p");
+        dashPageModel.waitUntilElementIsVisible("xpath", "//*[@id='usernameerror']/p");
         Assertions.assertTrue(dashPageModel.getErrorMessage().contains("Sorry, your username and password are incorrect - please try again."));
 
         dashPageModel.loginOnDashPage(FileReader.getValueByKey("jira.username"), FileReader.getValueByKey("jira.password"));

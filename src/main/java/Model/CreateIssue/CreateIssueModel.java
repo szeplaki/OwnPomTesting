@@ -2,13 +2,22 @@ package Model.CreateIssue;
 
 import Model.Login.LoginPageModel;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class CreateIssueModel extends LoginPageModel {
+
+    WebDriverWait webDriverWait;
     public CreateIssueModel() {
         PageFactory.initElements(webDriver, this);
+        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(1));
     }
 
     @FindBy(id = "create_link")
@@ -54,14 +63,12 @@ public class CreateIssueModel extends LoginPageModel {
         return issueField;
     }
 
-    public void waitForPresenceOfSummaryField() {
-        for (int i = 0; i <= 2; i++) {
-            try {
-                webDriver.findElement(By.id("summary")).click();
-                break;
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+    public void catchAndClickElement(String id) {
+        try {
+            webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id(id)));
+        } catch (TimeoutException ignored) {
+        } finally {
+            webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id))).click();
         }
     }
 
@@ -99,5 +106,57 @@ public class CreateIssueModel extends LoginPageModel {
 
     public WebElement getSubmitDelete() {
         return submitDelete;
+    }
+    public void selectProjectField(String expectedProjectKey) {
+        catchElement("project-field");
+        getProjectField().click();
+        getProjectField().sendKeys(Keys.BACK_SPACE);
+        getProjectField().sendKeys(expectedProjectKey);
+        getModalHeader().click();
+    }
+
+    private void catchElement(String id) {
+        try {
+            webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.id(id)));
+        } catch (TimeoutException ignored) {
+        } finally {
+            webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+        }
+    }
+
+    public void copyValueFromProjectField() {
+        catchElement("project-field");
+        getProjectField().click();
+        getProjectField().sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        getProjectField().sendKeys(Keys.chord(Keys.CONTROL, "c"));
+    }
+
+    public void selectIssueTypeField(String expectedIssueType) {
+        catchElement("issuetype-field");
+        getIssueField().click();
+        getIssueField().sendKeys(Keys.BACK_SPACE);
+        getIssueField().sendKeys(expectedIssueType);
+        getModalHeader().click();
+    }
+
+    public void copyValueFromIssueTypeField() {
+        catchElement("issuetype-field");
+        getIssueField().click();
+        getIssueField().sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        getIssueField().sendKeys(Keys.chord(Keys.CONTROL, "c"));
+    }
+
+    public void pasteValueToSummaryField() {
+        catchElement("summary");
+        getSummaryField().click();
+        getSummaryField().sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        getSummaryField().sendKeys(Keys.chord(Keys.CONTROL, "v"));
+    }
+
+    public String saveValueOfSummaryIntoVariable() {
+        return getSummaryField().getAttribute("value");
+    }
+    public void clearSummaryField() {
+        getSummaryField().clear();
     }
 }
